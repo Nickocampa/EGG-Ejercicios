@@ -107,7 +107,10 @@ public class RevolverAguaService {
                 System.out.println("-------JUGADOR # " + (i + 1) + "--------");
                 System.out.println("¡¡¡¡¡¡¡TE SALVASTE!!!!!!!!");
                 System.out.println("--------------------------");
-                t++;
+                if ((i+1)==contador) {
+                    t=0;                    
+                }else t++;
+                
                 RevolverAgua revaux = new RevolverAgua();
                 revaux = siguienteChorro(rev1);
                 mojar(jugadores, revaux);
