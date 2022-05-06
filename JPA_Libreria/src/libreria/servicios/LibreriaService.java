@@ -39,12 +39,11 @@ public class LibreriaService {
             
             int opcion = Integer.parseInt(opcionElegida);
 
-            if (opcion < 0 || opcion > 9) {
+            if (opcion < 1 || opcion > 9) {
                 throw new Exception("Las opciones van de 0 a 9");
             }
         } catch (Exception e) {
-            System.out.println("Las opciones van de 0 a 9");
-            opcionElegida = null;
+            System.out.println("Las opciones van de 1 a 9");
             menu();
         }
 

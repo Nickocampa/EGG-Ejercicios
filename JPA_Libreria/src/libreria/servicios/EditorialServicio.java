@@ -12,6 +12,7 @@ public class EditorialServicio {
     Scanner leer = new Scanner(System.in);
     Editorial editorial = new Editorial();
     List<Editorial> editoriales = new ArrayList<>();
+    String editorialId;
     //CREAR ENTITY MANAGER//
     EntityManager em = Persistence.createEntityManagerFactory("JPA_LibreriaPU").createEntityManager();
 
@@ -37,12 +38,11 @@ public class EditorialServicio {
         String seleccionUsuario = leer.next();
         if (seleccionUsuario.equals("0")) {
             editorial = crearEditorial();
-        } else {
-            editorial.setAlta(Boolean.TRUE); 
-            for (Editorial aux : editoriales) {
-                
+            
+        } else {             
+            for (Editorial aux : editoriales) {                
                 if (aux.getId().equalsIgnoreCase(seleccionUsuario)) {
-                    editorial.setNombre(aux.getNombre());
+                    editorial = aux;
                 }                
             }            
         }
@@ -51,12 +51,17 @@ public class EditorialServicio {
     }
 
     public Editorial crearEditorial() {
-
+        
         editorial.setAlta(Boolean.TRUE);
         System.out.println("Ingrese el nombre de la editorial");
-        String nombre = leer.next();
-        editorial.setNombre(nombre);
-        
+        editorial.setNombre(leer.next());
+        //Nos conectamos para crear la editorial
+         em.getTransaction().begin();
+        //Persistimos el objeto
+        em.persist(editorial);
+        //Terminamos la transacción con el método commit. Commit en programación significa confirmar un conjunto de cambios, en este caso persistir el objeto*/
+        em.getTransaction().commit();
+               
         return editorial;
     }
 

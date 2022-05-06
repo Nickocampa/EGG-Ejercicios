@@ -12,6 +12,7 @@ public class AutorServicio {
     Scanner leer = new Scanner(System.in);
     Autor autor = new Autor();
     List<Autor> autores = new ArrayList<>();
+    String autorId;
     //CREAR ENTITY MANAGER//
     EntityManager em = Persistence.createEntityManagerFactory("JPA_LibreriaPU").createEntityManager();
 
@@ -36,27 +37,29 @@ public class AutorServicio {
         String seleccionUsuario = leer.next();
         if (seleccionUsuario.equals("0")) {
             autor = crearAutor();
-        } else {
-            autor.setAlta(Boolean.TRUE); 
-            for (Autor aux : autores) {
-                
+            
+        } else {             
+            for (Autor aux : autores) {                
                 if (aux.getId().equalsIgnoreCase(seleccionUsuario)) {
-                    autor.setNombre(aux.getNombre());
+                    autor = aux;
                 }                
             }            
         }
-
         return autor;
-
     }
 
     public Autor crearAutor() {
-
+        
         autor.setAlta(Boolean.TRUE);
         System.out.println("Ingrese el nombre del autor");
-        String nombre = leer.next();
-        autor.setNombre(nombre);
-        
+        autor.setNombre(leer.next());
+        //Nos conectamos para crear el autor
+         em.getTransaction().begin();
+        //Persistimos el objeto
+        em.persist(autor);
+        //Terminamos la transacción con el método commit. Commit en programación significa confirmar un conjunto de cambios, en este caso persistir el objeto*/
+        em.getTransaction().commit();
+               
         return autor;
     }
 }
