@@ -36,9 +36,7 @@ insert into	personajes values (8, 'Bruce Wayne', 'Batman',170,'500',32,47,1939,'
 select * from creador;
 select * from personajes;
 
-update personajes 
-	set aparicion = 1938
-    where id_personaje = 7;
+update personajes set aparicion = 1938   where id_personaje = 7;
 
 
 

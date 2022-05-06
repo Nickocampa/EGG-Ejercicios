@@ -1,11 +1,17 @@
 package tienda.entidades;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Producto {
 
     private int codigo;
     private String nombre;
     private double precio;
     private int codigoFabricante;
+    @Id
+    private Long id;
 
     public Producto() {
     }
@@ -47,5 +53,12 @@ public class Producto {
         return "Producto{" + "codigo=" + codigo + ", nombre=" + nombre + ", precio=" + precio + ", codigoFabricante=" + codigoFabricante + '}';
     }
 
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

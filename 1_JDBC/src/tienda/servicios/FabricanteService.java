@@ -9,7 +9,5 @@ public class FabricanteService {
     public void insertarNuevoFabricante() throws Exception {
         FabricanteDAO p1 = new FabricanteDAO();
         p1.insertarFabricante();
-
     }
-
 }

@@ -11,7 +11,7 @@ public class ProductoDAO extends DAO {
     public Collection<Producto> listarNombreProductos() throws Exception {
         try {
             // Enviamos el comando a MySQL como un String //
-            String comandoParaMySQL = "SELECT codigo,nombre FROM Producto ";
+            String comandoParaMySQL = "SELECT codigo,nombre,codigo_fabricante, precio FROM Producto ";
             // Metodo para consulta base de dato con comando enviado //
             consultarBase(comandoParaMySQL);
             // Instancio producto nulo //
@@ -22,6 +22,8 @@ public class ProductoDAO extends DAO {
                 producto = new Producto();
                 producto.setCodigo(resultado.getInt(1));
                 producto.setNombre(resultado.getString(2));
+                producto.setCodigoFabricante(resultado.getInt(3));
+                producto.setPrecio(resultado.getInt(4));
                 productos.add(producto);
 
             }
@@ -144,13 +146,40 @@ public class ProductoDAO extends DAO {
     //f) Ingresar un producto a la base de datos.//
     public void insertarProducto() throws Exception {
         Collection<Producto> productos = listarNombrePrecioProductos();
+        FabricanteDAO fD = new FabricanteDAO();
+        Collection<Fabricante> fabricantes = fD.listarNombreFabricante();
+
         try {
 
             // Enviamos el comando a MySQL como un String //
             System.out.println("Ingrese el producto para agregar");
-            String productoElegido = leer.next();
-            //mejorar codigo con eleccion de fabricante
-            String comandoParaMySQL = "INSERT into producto VALUES(" + (productos.size() + 1) + ",'" + productoElegido + "',3500,2)";
+            String productoElegido = leer.nextLine();
+            for (Fabricante fabricante : fabricantes) {
+                System.out.println("Codigo N# " + fabricante.getCodigo() + "- Nombre: " + fabricante.getNombre());
+            }
+
+            Integer fabricanteElegido = 0;
+
+            do {
+                System.out.println("Seleccione el codigo del fabricante");
+                fabricanteElegido = leer.nextInt();
+
+            } while (fabricanteElegido < 0 || fabricanteElegido > fabricantes.size());
+            
+            int precioElegido=-1;
+            
+            do {
+                try {System.out.println("Ingrese el precio del producto");
+            precioElegido = leer.nextInt();
+            } catch (Exception e) {
+            precioElegido=-1;
+            //limpia el nextInt buffer.
+            leer.next();
+        }
+            } while (precioElegido==-1);
+            
+            
+            String comandoParaMySQL = "INSERT into producto VALUES(" + (productos.size() + 1) + ",'" + productoElegido + "'," + precioElegido + ", " + fabricanteElegido + ")";
             // Metodo para consulta base de dato con comando enviado //
             insertarModificarEliminar(comandoParaMySQL);
             desconectarBase();
@@ -161,5 +190,4 @@ public class ProductoDAO extends DAO {
         }
     }
 
-    
 }

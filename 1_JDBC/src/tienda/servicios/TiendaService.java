@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tienda;
+package tienda.servicios;
 
 import java.util.Scanner;
 import tienda.servicios.FabricanteService;
@@ -32,17 +32,18 @@ public class TiendaService {
         System.out.println("5) Listar el nombre y el precio del producto más barato.");
         System.out.println("6) Ingresar un producto a la base de datos.");
         System.out.println("7) Ingresar un fabricante a la base de datos");
-        System.out.println("8) Editar un producto con datos a elección.*/");
-        System.out.println("9) SALIR");
+        System.out.println("8) Editar un producto con datos a elección.");
+        System.out.println("9) Eliminar un producto de la lista");
+        System.out.println("10) SALIR");
         opcionElegida = leer.next();
         try {
             int opcion = Integer.parseInt(opcionElegida);
 
-            if (opcion < 1 || opcion > 9) {
-                throw new Exception("Las opciones van de 1 a 9");
+            if (opcion < 1 || opcion > 10) {
+                throw new Exception("Las opciones van de 1 a 10");
             }
         } catch (Exception e) {
-            System.out.println("Las opciones van de 1 a 9");
+            System.out.println("Las opciones van de 1 a 10");
             opcionElegida = null;
             menu();
         }
@@ -81,6 +82,9 @@ public class TiendaService {
                 menu();
                 break;
             case "9":
+                pS.eliminarProducto();
+                break;
+            case "10":
                 System.exit(0);
                 break;
 

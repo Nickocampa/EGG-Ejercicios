@@ -22,7 +22,6 @@ public class FabricanteDAO extends DAO {
                 fabricante.setCodigo(resultado.getInt(1));
                 fabricante.setNombre(resultado.getString(2));
                 fabricantes.add(fabricante);
-
             }
             desconectarBase();
             return fabricantes;
@@ -34,9 +33,8 @@ public class FabricanteDAO extends DAO {
 
     //g) Ingresar un fabricante a la base de datos//
     public void insertarFabricante() throws Exception {
-        Collection<Fabricante> fabricantes = listarNombreFabricante();
+        Collection<Fabricante> fabricantes = listarNombreFabricante();                
         try {
-
             // Enviamos el comando a MySQL como un String //
             System.out.println("Ingrese el nombre del fabricante");
             String fabricanteElegido = leer.next();

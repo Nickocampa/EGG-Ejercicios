@@ -1,5 +1,6 @@
 package tienda.servicios;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Scanner;
 import tienda.entidades.Producto;
@@ -14,7 +15,7 @@ public class ProductoService extends DAO {
         ProductoDAO p1 = new ProductoDAO();
         for (Producto producto : p1.listarNombreProductos()) {
 
-            System.out.println("Producto N# " + producto.getCodigo() + " - " + producto.getNombre());
+            System.out.println("Producto N# " + producto.getCodigo() + " - " + producto.getNombre() + " - " + producto.getCodigoFabricante());
 
         }
     }
@@ -83,6 +84,40 @@ public class ProductoService extends DAO {
             throw e;
 
         }
+    }
+
+    void eliminarProducto() throws Exception {
+        ProductoDAO pD = new ProductoDAO();
+        TiendaService tS = new TiendaService();
+        mostrarProductos();
+        System.out.println("Seleccione el codigo del producto a eliminar");
+        int codigoEliminar = leer.nextInt();
+
+        Collection<Producto> productos = pD.listarNombreProductos();
+        Producto pUltimo = new Producto();
+        int cantElementos = productos.size();
+
+        for (Producto producto : productos) {
+
+            if (producto.getCodigo() == productos.size()) {
+                pUltimo.setCodigo(producto.getCodigo());
+                pUltimo.setNombre(producto.getNombre());
+                pUltimo.setPrecio(producto.getPrecio());
+                pUltimo.setCodigoFabricante(producto.getCodigoFabricante());
+                //p = producto;
+            }
+        }
+        //, set precio = " + pUltimo.getPrecio() + " , set codigo_fabricante = " + pUltimo.getCodigoFabricante() + //
+        if (codigoEliminar != productos.size()) {
+            String comandoParaMySQL = "update producto set nombre = '" + pUltimo.getNombre() + "' where codigo = " + codigoEliminar + ";";
+        //Metodo para modificar base de dato con comando enviado //
+        insertarModificarEliminar(comandoParaMySQL);
+        }
+        
+        String comandoParaMySQL2 = "DELETE FROM producto WHERE codigo = " + productos.size() + " ORDER BY codigo;";
+        insertarModificarEliminar(comandoParaMySQL2);
+        desconectarBase();
+        tS.menu();
     }
 
 }
