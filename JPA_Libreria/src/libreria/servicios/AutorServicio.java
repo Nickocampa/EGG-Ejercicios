@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import libreria.entidades.Autor;
+import libreria.entidades.Libro;
 
 public class AutorServicio {
 
@@ -37,29 +39,45 @@ public class AutorServicio {
         String seleccionUsuario = leer.next();
         if (seleccionUsuario.equals("0")) {
             autor = crearAutor();
-            
-        } else {             
-            for (Autor aux : autores) {                
+
+        } else {
+            for (Autor aux : autores) {
                 if (aux.getId().equalsIgnoreCase(seleccionUsuario)) {
                     autor = aux;
-                }                
-            }            
+                }
+            }
         }
         return autor;
     }
 
     public Autor crearAutor() {
-        
+
         autor.setAlta(Boolean.TRUE);
         System.out.println("Ingrese el nombre del autor");
         autor.setNombre(leer.next());
         //Nos conectamos para crear el autor
-         em.getTransaction().begin();
+        em.getTransaction().begin();
         //Persistimos el objeto
         em.persist(autor);
         //Terminamos la transacción con el método commit. Commit en programación significa confirmar un conjunto de cambios, en este caso persistir el objeto*/
         em.getTransaction().commit();
-               
+
         return autor;
     }
+
+    public void buscarAutor() {
+        
+        try {
+            System.out.println("Ingrese el nombre del autor a buscar");
+            String autorBuscado = leer.next();
+            Query query = em.createQuery("SELECT e FROM Autor e WHERE e.nombre = :nombre");
+            query.setParameter("nombre", autorBuscado);
+            Autor result = (Autor) query.getSingleResult();            
+            System.out.println("El autor *" + result.getNombre() + "* se encontro en la lista");
+            
+        } catch (Exception e) {
+            System.out.println("El autor no se encontro en la base de datos");
+            buscarAutor();
+        }        
+    }    
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import libreria.entidades.Autor;
 import libreria.entidades.Editorial;
 
 public class EditorialServicio {
@@ -64,5 +66,21 @@ public class EditorialServicio {
                
         return editorial;
     }
+
+    void buscarEditorial() {
+        try {
+            System.out.println("Ingrese el nombre de la editorial a buscar");
+            String editorialBuscada = leer.next();
+            Query query = em.createQuery("SELECT e FROM Editorial e WHERE e.nombre = :nombre");
+            query.setParameter("nombre", editorialBuscada);
+            Editorial result = (Editorial) query.getSingleResult();
+            System.out.println("La editorial *" + result.getNombre() + "* se encontro en la lista");
+        } catch (Exception e) {
+            System.out.println("La editorial no se encontro en la base de datos");
+            buscarEditorial();
+        } 
+    }
+    
+    
 
 }

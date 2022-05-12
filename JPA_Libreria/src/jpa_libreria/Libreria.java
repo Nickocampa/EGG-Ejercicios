@@ -9,10 +9,8 @@ public class Libreria {
     public static void main(String[] args) throws Exception {
         
         LibreriaService lSer = new LibreriaService();
-        lSer.menu();
+        lSer.menu();              
                 
-        
-        
     }
     
 }

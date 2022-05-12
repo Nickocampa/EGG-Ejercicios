@@ -6,25 +6,26 @@ public class LibreriaService {
 
     Scanner leer = new Scanner(System.in);
     LibroServicio lS = new LibroServicio();
+    AutorServicio aS = new AutorServicio();
+    EditorialServicio eS = new EditorialServicio();
 
     public void mensajeMenu() {
 
         System.out.println(
-                  "1) Añadir un libro\n"/*
-                + "2) Crear los métodos para dar de alta/bajo o editar dichas entidades.\n"
-                + "3) Búsqueda de un Autor por nombre.\n"
-                + "4) Búsqueda de un libro por ISBN.\n"
-                + "5) Búsqueda de un libro por Título.\n"
-                + "6) Búsqueda de un libro/s por nombre de Autor.\n"
-                + "7) Búsqueda de un libro/s por nombre de Editorial.\n"
-                + "8) Agregar las siguientes validaciones a todas las funcionalidades de la aplicación:\n"
-                + "  • Validar campos obligatorios.\n"
-                + "  • No ingresar datos duplicados.\n"*/
-                + "9) SALIR");
-
+                "1) Agregar autor.\n"
+                + "2) Agregar editorial.\n"
+                + "3) Añadir un libro.\n"
+                + "4) Dar de alta/baja un libro.\n"
+                + "5) Buscar un Autor por nombre.\n"
+                + "5) Buscar una editorial por nombre.\n"
+                + "6) Buscar libro por ISBN.\n"
+                + "7) Buscar libro por Titulo.\n"
+                + "8) Buscar libro/s por Autor.\n"
+                + "9) Buscar libro/s por Editorial.\n"    
+                + "10) SALIR");
     }
 
-    public void menu() throws Exception    {
+    public void menu() throws Exception {
 
         String opcionElegida = null;
 
@@ -34,53 +35,57 @@ public class LibreriaService {
         mensajeMenu();
 
         opcionElegida = leer.next();
-        
+
         try {
-            
+
             int opcion = Integer.parseInt(opcionElegida);
 
-            if (opcion < 1 || opcion > 9) {
-                throw new Exception("Las opciones van de 0 a 9");
+            if (opcion < 1 || opcion > 10) {
+                throw new Exception("Las opciones van de 1 a 10");
             }
         } catch (Exception e) {
-            System.out.println("Las opciones van de 1 a 9");
+            System.out.println("Las opciones van de 1 a 10");
             menu();
         }
 
         switch (opcionElegida) {
             case "1":
-                lS.crearLibro();
+                aS.crearAutor();
                 menu();
                 break;
-            /*case "2":
-
+            case "2":
+                eS.crearEditorial();
                 menu();
                 break;
             case "3":
-
+                lS.crearLibro();
                 menu();
                 break;
             case "4":
-
+                lS.darAltaBajaModificarLibro();
                 menu();
                 break;
             case "5":
-
+                aS.buscarAutor();
                 menu();
                 break;
             case "6":
-
+                eS.buscarEditorial();
                 menu();
                 break;
             case "7":
-
+                lS.buscarPorTitulo();
                 menu();
                 break;
             case "8":
-
+                lS.buscarLibroPorAutor();
                 menu();
-                break;*/
+                break;
             case "9":
+                lS.buscarLibroPorEditorial();
+                menu();
+                break;
+            case "10":
                 System.exit(0);
                 break;
 
